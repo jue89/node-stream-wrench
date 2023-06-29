@@ -7,6 +7,7 @@ export default class CircuitBreaker extends Transform {
 		super();
 		this.buffer = Buffer.alloc(0);
 		this.triggerSequences = [];
+		this.triggerSequenceLen = 0;
 	}
 
 	setTrigger (triggerSequences) {
@@ -49,7 +50,11 @@ export default class CircuitBreaker extends Transform {
 		}
 
 		// Crop buffer to max trigger sequence len
-		this.buffer = this.buffer.subarray(this.triggerSequenceLen * -1);
+		if (this.triggerSequenceLen > 0) {
+			this.buffer = this.buffer.subarray(this.triggerSequenceLen * -1);
+		} else {
+			this.buffer = Buffer.alloc(0);
+		}
 
 		callback(null, chunk);
 	}

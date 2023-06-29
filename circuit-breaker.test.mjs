@@ -58,3 +58,12 @@ test('make sure to remove error listeners', async () => {
 	assert.equal(cb.listenerCount('error'), 0);
 });
 
+test('do not trigger on sequences that have been set after arrival', async () => {
+	const onData = mock.fn();
+	const cb = new CircuitBreaker();
+	cb.on('data', onData);
+	await write(cb, 'STOP');
+	cb.setTrigger(Buffer.from('STOP'));
+	await write(cb, 'foo');
+	assert.equal(onData.mock.calls.length, 2);
+});
