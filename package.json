@@ -24,6 +24,7 @@
     "qsem": "^1.0.0"
   },
   "exports": {
+    ".": "./index.mjs",
     "./circuit-breaker": "./circuit-breaker.mjs",
     "./stream-chopper": "./stream-chopper.mjs"
   }
