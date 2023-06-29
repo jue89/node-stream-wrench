@@ -12,11 +12,28 @@ export default class CircuitBreaker extends Transform {
 
 	setTrigger (triggerSequences) {
 		if (!Array.isArray(triggerSequences)) triggerSequences = [triggerSequences];
-		for (let triggerSequence of triggerSequences) {
-			assert(typeof triggerSequence === 'string' || Buffer.isBuffer(triggerSequence), 'Trigger sequence must be of type String or Buffer');
-		}
-		this.triggerSequenceLen = triggerSequences.reduce((len, word) => Math.max(len, word.length), 0);
-		this.triggerSequences = triggerSequences;
+
+		this.triggerSequences = triggerSequences.map((trigger) => {
+			if (typeof trigger === 'string' || Buffer.isBuffer(trigger)) {
+				trigger = {
+					seq: trigger,
+					err: `Found sequence: '${trigger.toString()}'`,
+				};
+			} else {
+				assert(
+					typeof trigger.seq === 'string' || Buffer.isBuffer(trigger.seq),
+					'Trigger sequence must be of type String or Buffer'
+				);
+				assert(
+					typeof trigger.err === 'string',
+					'Trigger error must be of type String'
+				);
+			}
+
+			return trigger;
+		});
+
+		this.triggerSequenceLen = this.triggerSequences.reduce((len, {seq}) => Math.max(len, seq.length), 0);
 		return this;
 	}
 
@@ -43,9 +60,9 @@ export default class CircuitBreaker extends Transform {
 	_transform (chunk, encoding, callback) {
 		this.buffer = Buffer.concat([this.buffer, chunk]);
 
-		for (const sequence of this.triggerSequences) {
-			if (this.buffer.includes(sequence)) {
-				return callback(new Error(`Found sequence: '${sequence}'`));
+		for (const {seq, err} of this.triggerSequences) {
+			if (this.buffer.includes(seq)) {
+				return callback(new Error(err));
 			}
 		}
 

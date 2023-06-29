@@ -67,3 +67,14 @@ test('do not trigger on sequences that have been set after arrival', async () =>
 	await write(cb, 'foo');
 	assert.equal(onData.mock.calls.length, 2);
 });
+
+test('define own error messages', async () => {
+	const onError = mock.fn();
+	const cb = new CircuitBreaker();
+	cb.setTrigger({
+		seq: 'STOP',
+		err: 'Custom error',
+	}).on('error', onError);
+	await write(cb, 'STOP');
+	assert.equal(onError.mock.calls[0].arguments[0].message, 'Custom error');
+});

@@ -72,7 +72,15 @@ const cb = new CircuitBreaker();
 cb.setTrigger(sequences);
 ```
 
-Sets the Array of Strings or Buffers `sequences` as trigger sequences. Previously set sequences are overwritten.
+Sets the trigger sequence. Previously set sequences are overwritten.
+
+`sequences` may be a *Sequence* or an Array of *Sequence*.
+
+
+*Sequence* is a *Buffer* or a *String* or an *Object* with the following keys:
+* `seq`: *Buffer* or *String* of the trigger sequence
+* `err`: *String* with the error message that will be used if the circuit breaker triggers by the given `seq`
+
 
 #### Method: protectPromise(promise)
 
