@@ -1,0 +1,23 @@
+{
+  "name": "stream-wrench",
+  "version": "0.0.0",
+  "description": "Collection of stream manipulation helpers",
+  "scripts": {
+    "test": "node --test",
+    "lint": "eslint --config .eslintrc.js *.mjs",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch",
+    "release:major": "standard-version --release-as major"
+  },
+  "keywords": [
+    "stream",
+    "manipulation"
+  ],
+  "author": "Juergen Fitschen <me@jue.yt>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.42.0",
+    "standard-version": "^9.5.0"
+  }
+}
