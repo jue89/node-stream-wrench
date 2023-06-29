@@ -16,6 +16,14 @@
   ],
   "author": "Juergen Fitschen <me@jue.yt>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jue89/node-stream-wrench.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jue89/node-stream-wrench/issues"
+  },
+  "homepage": "https://github.com/jue89/node-stream-wrench#readme",
   "devDependencies": {
     "eslint": "^8.42.0",
     "standard-version": "^9.5.0"
