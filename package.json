@@ -19,5 +19,11 @@
   "devDependencies": {
     "eslint": "^8.42.0",
     "standard-version": "^9.5.0"
+  },
+  "dependencies": {
+    "qsem": "^1.0.0"
+  },
+  "exports": {
+    "./stream-chopper": "./stream-chopper.mjs"
   }
 }
