@@ -1,6 +1,6 @@
 {
   "name": "stream-wrench",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Collection of stream manipulation helpers",
   "scripts": {
     "test": "node --test",
